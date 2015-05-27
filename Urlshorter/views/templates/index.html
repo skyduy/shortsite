@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Easier Life | 网址缩短</title>
+		<link href="/static/css/bootstrap.css" rel='stylesheet' type='text/css' />
+		<script src="/static/js/jquery.min.js"></script>
+		<link href="/static/css/style.css" rel='stylesheet' type='text/css' />
+		<script type="text/javascript" src="/static/js/move-top.js"></script>
+		<script type="text/javascript" src="/static/js/easing.js"></script>
+        <script type="text/javascript" src="/static/js/jquery.js"></script>
+        <script type="text/javascript" src="/static/js/jquery.pikachoose.js"></script>
+		<!-- code by skyduy -->
+        <script type="text/javascript">
+            $(function (){
+                $("#shorten").click(function(){
+                    var tip=$("#out");
+                    tip.html('生成中...请稍后...');
+                    var suffix=$("#url").attr("value");
+                    if (suffix.length<4){
+                        tip.html('您输入的URL格式不正确，请确认后重新输入.');
+                        url.focus();
+                    }
+                    else{
+                        $.post("/",{url:suffix},
+                                function(data,status){
+                                    var dict=eval('(' + data + ')');
+                                    if (dict['ok']!=1)
+                                        $("#out").html(dict['suffix']);
+                                    else
+                                        $("#out").html("<a href=\"http://oits.me/"+dict['suffix']+"\">oits.me/"+dict['suffix']+"</a>");
+                        });
+                    }
+                });
+            });
+        </script>
+        <!-- end code -->
+	</head>
+	<body>
+			<!----banner---->
+			<div class="banner text-center">
+				<div class="container">
+					<div class="banner-info">
+                        <div class="col-md-7 contact-form">
+                            </p><p id="out">{{info}}</p>
+                            <input name="url" id="url" style="background:transparent;border:2px solid" type="text" class="input" placeholder="原始网址" /><input id="shorten" type="submit" value="生成" />
+                        </div>
+					</div>
+				</div>
+			</div>
+			<!--//banner---->
+
+					<!---footer--->
+					<div class="footer">
+						<div class="container">
+							<div class="footer-left">
+								<p>
+                                    <a href="http://skyduy.oits.me" class="scroll">Contact me</a>
+                                    <span> | </span><a href="https://github.com/skyduy/shortsite">Source code</a>
+                                </p>
+							</div>
+							<div class="footer-right">
+								<p>Template by <a href="http://w3layouts.com/">W3layouts</a></p>
+							</div>
+							<div class="clearfix"> </div>
+						</div>
+					</div>
+					<!---//footer--->
+	</body>
+</html>
+
