@@ -1,8 +1,0 @@
----
-libraries:
-- name: "django"
-  version: "1.4"
-
-
-name: skyduy
-version: 1
