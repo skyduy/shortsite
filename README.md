@@ -1,4 +1,4 @@
-﻿# 网址缩短工具
+﻿# 网址缩短工具 V 2.0
 ####Demo: [Easier Life](http://oits.me "")
 
 #### 本地使用
