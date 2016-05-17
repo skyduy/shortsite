@@ -1,5 +1,4 @@
 ﻿# 网址缩短工具 V 2.0
-####Demo: [Easier Life](http://oits.me "")
 
 #### 本地使用
     本机运行可以直接拿来Urlshort和static用就行了。
