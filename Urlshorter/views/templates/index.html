@@ -22,10 +22,11 @@
                     }
                     else{
                         $.post("/",{url:suffix},
-                                function(data,status){
+                                function(data, status){
                                     var dict=eval('(' + data + ')');
-                                    if (dict['ok']!=1)
-                                        $("#out").html(dict['suffix']);
+                                    var ok = dict['ok'];
+                                    if (ok!=1)
+                                        $("#out").html("非常抱歉...服务器内部发生错误...");
                                     else
                                         $("#out").html("<a href=\"/"+dict['suffix']+"\">example.com/"+dict['suffix']+"</a>");
                         });

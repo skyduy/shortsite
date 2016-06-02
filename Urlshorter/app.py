@@ -1,9 +1,13 @@
-# coding:utf-8
+# coding: utf-8
+
 """
-    app入口
+    App入口
     ~~~~~~~~~~
-    :author  Dultty <cuteuy@gmail.com>
+
+    :author Skyduy <cuteuy@gmail.com> <http://skyduy.me>
+
 """
+
 from flask import Flask
 
 from models import register_database
@@ -37,6 +41,5 @@ def register_routes(app):
     from Urlshorter.views.routes import home
     app.register_blueprint(home, url_prefix='/')
 
-#
-# if __name__ == '__main__':
-#     create_app(debug=True, need_verify=True).run()
+if __name__ == '__main__':
+    create_app(debug=True).run()

@@ -5,6 +5,7 @@ import time
 
 __all__ = ['create_suffix', 'get_suffix']
 
+
 def get_suffix(unique_str):
     code_map = (
         'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
@@ -23,7 +24,6 @@ def get_suffix(unique_str):
     e = 0
     for j in xrange(0, 3):
         x = 0x0000003D & n % 36
-        print x
         e |= ((0x00000002 & n) >> 1) << j
         v.insert(0, code_map[x])
         n >>= 6
@@ -38,7 +38,8 @@ def add_to_db(url, new):
     try:
         question_answer = Record(url, new)
         question_answer.save()
-    except Exception:
+    except Exception as e:
+        print e
         return 0
     else:
         return 1

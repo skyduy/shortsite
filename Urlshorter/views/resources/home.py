@@ -1,11 +1,11 @@
 # coding:utf-8
 from __future__ import unicode_literals
 
-import time
 import json
 from flask import render_template, request, make_response, redirect
 from flask.views import MethodView
 from Urlshorter.handlers.utils import create_suffix, get_origin
+
 
 class Home(MethodView):
     def get(self):
@@ -17,13 +17,10 @@ class Home(MethodView):
     def post(self):
         url = request.form['url']
         url = url[:100]
-        for i in range(3):
-            try:
-                ok, suffix = create_suffix(url)
-                return make_response(json.dumps({'ok': ok, 'suffix': suffix}))
-            except Exception:
-                time.sleep(0.5)
-        return make_response(json.dumps({'ok': 0, 'suffix': '系统繁忙...请稍后...'}))
+        ok, suffix = create_suffix(url)
+        if not ok:
+            suffix = '非常抱歉... 系统繁忙/内部错误...'
+        return make_response(json.dumps({'ok': 0, 'suffix': suffix}))
 
 
 class Jump(MethodView):
