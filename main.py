@@ -1,8 +1,15 @@
 # coding: utf-8
 
-import os
+# import os
+# import sys
+# sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'site_packages'))
+
 import sys
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'site_packages'))
+import logging
+logging.basicConfig(stream=sys.stderr)
+sys.path.insert(0, "/var/www/shortsite/")
+
 
 from Urlshorter.app import create_app
-app = create_app(debug=True)
+application = create_app()
+
