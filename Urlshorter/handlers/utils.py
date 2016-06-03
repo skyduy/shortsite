@@ -52,8 +52,10 @@ def create_suffix(url):
         return 0, 'URL格式不正确，请重新输入.'
     if not re.match(r"\Ahttp.*", url.lower()):
             url = 'http://'+url
-
-    result = Record.query.filter_by(raw=url).first()
+    try:
+        result = Record.query.filter_by(raw=url).first()
+    except Exception:
+        return 0, '暂不支持该URL.'
     if result is not None:
         return 1, result.new
     else:
@@ -62,7 +64,10 @@ def create_suffix(url):
 
 
 def get_origin(suffix):
-    result = Record.query.filter_by(new=suffix).first()
+    try:
+        result = Record.query.filter_by(new=suffix).first()
+    except Exception:
+        return 0, 0
     if result is not None:
         return 1, result.raw
     return 0, 0

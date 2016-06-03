@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 import json
-from flask import render_template, request, make_response, redirect
+from flask import render_template, request, make_response, redirect, abort
 from flask.views import MethodView
 from Urlshorter.handlers.utils import create_suffix, get_origin
 
@@ -27,4 +27,4 @@ class Jump(MethodView):
         if ok:
             return redirect(url)
         else:
-            return make_response("该短链不存在.")
+            return abort(404)
