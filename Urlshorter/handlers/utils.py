@@ -12,10 +12,10 @@ def get_suffix(long_url):
         return m.hexdigest()
     code_map = (
         '0', '1', '2', '3', '4', '5', '6', '7',
-        '8', '9', 'A', 'B', 'C', 'D', 'E', 'F',
-        'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N',
-        'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',
-        'W', 'X', 'Y', 'Z'
+        '8', '9', 'a', 'b', 'c', 'd', 'e', 'f',
+        'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
+        'o', 'p', 'q', 'r', 's', 't', 't', 'v',
+        'w', 'x', 'y', 'z'
     )
     hkeys = []
     md5_str = get_md5(long_url)
@@ -49,7 +49,7 @@ def create_suffix(url):
     url = url.replace(' ', '').replace('\n', '')
     n = re.match(r"\Ahttp://.*\..+\Z|\Ahttps://.*\..+\Z|\A.*\..+\Z", url.lower())
     if not n:
-        return 0, '您输入的URL格式不正确，请确认后重新输入.'
+        return 0, 'URL格式不正确，请重新输入.'
     if not re.match(r"\Ahttp.*", url.lower()):
             url = 'http://'+url
 

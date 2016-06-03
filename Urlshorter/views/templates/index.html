@@ -1,17 +1,39 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
-	<head>
-		<title>Easier Life | 网址缩短</title>
-		<link href="/static/css/bootstrap.css" rel='stylesheet' type='text/css' />
-		<script src="/static/js/jquery.min.js"></script>
-		<link href="/static/css/style.css" rel='stylesheet' type='text/css' />
-		<script type="text/javascript" src="/static/js/move-top.js"></script>
-		<script type="text/javascript" src="/static/js/easing.js"></script>
-        <script type="text/javascript" src="/static/js/jquery.js"></script>
-        <script type="text/javascript" src="/static/js/jquery.pikachoose.js"></script>
+<head>
+<title>Easier Life | 网址缩短</title>
+		<script src="static/js/jquery.min.js"></script>
+		<script type="text/javascript" src="static/js/move-top.js"></script>
+		<script type="text/javascript" src="static/js/easing.js"></script>
+        <script type="text/javascript" src="static/js/jquery.js"></script>
+        <script type="text/javascript" src="static/js/jquery.pikachoose.js"></script>
 		<!-- code by skyduy -->
         <script type="text/javascript">
             $(function (){
+                $("#url").keypress(function (e) {
+                    if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
+                        var tip=$("#out");
+                        tip.html('生成中...请稍后...');
+                        var suffix=$("#url").attr("value");
+                        if (suffix.length<4){
+                            tip.html('您输入的URL格式不正确，请确认后重新输入.');
+                            url.focus();
+                        }
+                        else{
+                            $.post("/",{url:suffix},
+                                    function(data, status){
+                                        var dict=eval('(' + data + ')');
+                                        var ok = dict['ok'];
+                                        if (ok!=1)
+                                            $("#out").html(dict['suffix']);
+                                        else
+                                            $("#out").html("<a href=\"/"+dict['suffix']+"\" style=\"color:#111111;text-decoration:none;\">http://s.skyduy.me/"+dict['suffix']+"</a>");
+                            });
+                        }
+                    } else {
+                        return true;
+                    }
+                });
                 $("#shorten").click(function(){
                     var tip=$("#out");
                     tip.html('生成中...请稍后...');
@@ -35,37 +57,624 @@
             });
         </script>
         <!-- end code -->
-	</head>
-	<body>
-			<!----banner---->
-			<div class="banner text-center">
-				<div class="container">
-					<div class="banner-info">
-                        <div class="col-md-7 contact-form">
-                            </p><p id="out">{{info}}</p>
-                            <input name="url" id="url" style="background:transparent;border:2px solid" type="text" class="input" placeholder="原始网址" /><input id="shorten" type="submit" value="生成" />
-                        </div>
-					</div>
-				</div>
-			</div>
-			<!--//banner---->
 
-					<!---footer--->
-					<div class="footer">
-						<div class="container">
-							<div class="footer-left">
-								<p>
-                                    <a href="http://skyduy.oits.me" class="scroll">Contact me</a>
-                                    <span> | </span><a href="https://github.com/skyduy/shortsite">Source code</a>
-                                </p>
-							</div>
-							<div class="footer-right">
-								<p>Template by <a href="http://w3layouts.com/">W3layouts</a></p>
-							</div>
-							<div class="clearfix"> </div>
-						</div>
-					</div>
-					<!---//footer--->
-	</body>
+	<style type="text/css">
+
+	    body{
+            width: 100%;
+            background:url(static/images/background.png) 0px 0px;
+			display:block;
+            margin:0;
+            padding:0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        html{
+            width: 100%;
+        }
+
+        table{
+            font-size: 14px;
+            border: 0;
+        }
+		table.map tr td iframe{
+			width:100%;
+			height:200px;
+		}
+		 /* ----------- responsivity ----------- */
+		 @media only screen and (max-width:800px){
+			.container {
+				width: 700px;
+			}
+			.banner-bottom-left,.banner-bottom-left1,.banner-bottom-left2,table.discount-left, .discount-left1{
+				width: 350px;
+			}
+			.banner-bottom-left-sub {
+				width: 325px;
+			}
+			.team-bottom-left {
+				width: 50px;
+			}
+			.team-bottom-left1 {
+				width: 10px;
+			}
+			.team-bottom-left2 {
+				width: 290px;
+			}
+		}
+		 @media only screen and (max-width: 768px){
+			.container {
+				width: 650px;
+			}
+			.banner-bottom-left,.banner-bottom-left1,.banner-bottom-left2{
+				width: 325px;
+			}
+			.banner-bottom-left-sub {
+				width: 290px;
+			}
+			.team-bottom-left {
+				width: 30px;
+			}
+			.team-bottom-left1 {
+				width: 10px;
+			}
+			.team-bottom-left4, .team-bottom-left4 img {
+				width: 320px !important;
+			}
+			.discount-left,img.discount-left1{
+				width: 300px !important;
+				height: 320px;
+			}
+		 }
+		 @media only screen and (max-width: 667px){
+			table.scale.image1 {
+				width: 48% !important;
+			}
+			table.scale.image1 img{
+				width:100% !important;
+			}
+			table.may {
+				width: 500px !important;
+			}
+			table.container-middle {
+				width: 620px;
+			}
+			.container {
+				width: 600px;
+			}
+		}
+        @media only screen and (max-width: 640px){
+			.banner-bottom-left,.banner-bottom-left2,.banner-bottom-left1 {
+				width: 580px;
+			}
+			.banner-bottom-left{
+				background:url(static/images/1.jpg) no-repeat 95px 0px !important;
+			}
+			.banner-bottom-left-sub {
+				width: 365px;
+			}
+			.banner-bottom-left1{
+				background: url(static/images/2.jpg) no-repeat 95px 0px !important;
+			}
+
+            /*------ top header ------ */
+            .header-bg{width: 440px !important; height: 10px !important;}
+            .main-header{line-height: 28px !important;}
+            .main-subheader{line-height: 28px !important;}
+
+            /*----- --features ---------*/
+            .feature{width: 420px !important;}
+            .feature-middle{width: 400px !important; text-align: center !important;}
+            .feature-img{width: 440px !important; height: auto !important;}
+
+            .container{width: 600px !important;}
+            .container-middle{width:575px !important;}
+            .mainContent{width: 400px !important;}
+
+            .main-image{width: 400px !important; height: auto !important;}
+            /*------ sections ---------*/
+            .section-item{width: 400px !important;}
+            .section-img{width: 400px !important; height: auto !important;}
+            /*------- prefooter ------*/
+            .prefooter-header{padding: 0 10px !important; line-height: 24px !important;}
+            .prefooter-subheader{padding: 0 10px !important; line-height: 24px !important;}
+            /*------- footer ------*/
+            .top-bottom-bg{width: 420px !important; height: auto !important;}
+            .banner1 {
+				width: 400px !important;
+			}
+			.team-bottom-left2 {
+				width: 100%;
+				text-align: center;
+				height: 300px;
+			}
+			.team-bottom-left4 {
+				width: 100% !important;
+				text-align: center;
+			}
+			table.discount-left {
+				width: 100%;
+				text-align: center;
+			}
+			.footer-left {
+				width: 190px;
+			}
+			.banner-bottom-left2 {
+				width: 600px;
+			}
+			.team-bottom-left,.team-bottom-left1 {
+				width: 0;
+				height: 0;
+			}
+			.team-space {
+				height: 40px;
+			}
+			.team-bottom-left2-sub {
+				width: 500px;
+				margin: 0 auto;
+			}
+			.discount-left-sub {
+				width: 300px;
+			}
+			.copy-right {
+				width: 319px;
+			}
+        }
+		@media only screen and (max-width: 600px){
+			.container {
+				width: 560px !important;
+			}
+			.banner-bottom-left2 {
+				width: 575px;
+			}
+		}
+		@media only screen and (max-width: 568px){
+			.container {
+				width: 525px !important;
+			}
+			.banner-bottom-left2 {
+				width: 542px;
+			}
+			.banner-bottom-left, .banner-bottom-left2, .banner-bottom-left1 {
+				width: 545px;
+			}
+			.banner-bottom-left {
+				background: url(static/images/1.jpg) no-repeat 73px 0px !important;
+<!-- w3layouts -->
+				}
+			.banner-bottom-left, .banner-bottom-left2, .banner-bottom-left1 {
+				width: 545px;
+			}
+			.banner-bottom-left-sub {
+				width: 376px;
+			}
+			.banner-bottom-left1 {
+				background: url(static/images/2.jpg) no-repeat 43px 0px !important;
+			}
+			.container-middle {
+				width: 510px !important;
+			}
+		}
+		@media only screen and (max-width: 480px){
+			.progress-bars {
+				width: 100%;
+				text-align: center;
+			}
+			img.image1 {
+				margin: 0 auto;
+			}
+			.discount-left, img.discount-left1 {
+				width: 100%;
+				height: auto;
+			}
+			.footer-left {
+				width: 100%;
+			}
+			.copy-right,.twelve {
+				width: 100%;
+				text-align: center;
+			}
+			.container {
+				width: 200px !important;
+			}
+			.icon {
+				text-align: center;
+				width:100%;
+			}
+			table.dummy_text {
+				width: 385px;
+			}
+			table.logo-bottom {
+				width: 400px;
+			}
+			table.basd {
+				background: url(static/images/banner1.jpg) no-repeat 0px 0px #fff;
+				background-size: contain !important;
+<!-- agileits -->
+				}
+			table.may {
+				width: 425px !important;
+			}
+			.container-middle {
+				width: 430px !important;
+			}
+			table.basd {
+				background: url(static/images/banner1.jpg) no-repeat 0px 0px #fff !important;
+				background-size:contain !important;
+			}
+			img.logo {
+				width: 75%;
+			}
+			.banner-bottom-left {
+				background:url(static/images/1.jpg) no-repeat 24px 0px !important;
+			}
+			.banner-bottom-left, .banner-bottom-left2, .banner-bottom-left1 {
+				width: 450px;
+			}
+			.banner-bottom-left1 {
+				background: url(static/images/2.jpg) no-repeat 24px 0px !important;
+			}
+			.team-grid {
+				width: 100%;
+				text-align: center;
+			}
+			.banner-space {
+				height: 40px;
+			}
+			.service-icon {
+				width: 100%;
+			}
+			.team-bottom-left2-sub {
+				width: 400px;
+			}
+			.progress-team {
+				height: 10px;
+			}
+			table.discount-left {
+				width: 100% !important;
+			}
+			img.discount-left1 {
+				margin: 0 auto;
+			}
+		}
+        @media only screen and (max-width: 479px){
+
+        	/*------ top header ------ */
+<!-- w3layouts -->
+            .header-bg{width: 280px !important; height: 10px !important;}
+            .top-header-left{width: 260px !important; text-align: center !important;}
+            .top-header-right{width: 260px !important;}
+            .main-header{line-height: 28px !important; text-align: center !important;}
+            .main-subheader{line-height: 28px !important; text-align: center !important;}
+
+            /*------- header ----------*/
+            .logo{width: 260px !important;}
+            .nav{width: 260px !important;}
+
+            /*----- --features ---------*/
+            .feature{width: 260px !important;}
+            .feature-middle{width: 240px !important; text-align: center !important;}
+            .feature-img{width: 260px !important; height: auto !important;}
+
+
+            .container{width:370px !important;}
+            .container-middle{width: 260px !important;}
+            .mainContent{width: 240px !important;}
+
+            .main-image{width: 240px !important; height: auto !important;}
+            /*------ sections ---------*/
+            .section-item{width: 240px !important;}
+            .section-img{width: 240px !important; height: auto !important;}
+            /*------- prefooter ------*/
+            .prefooter-header{padding: 0 10px !important;line-height: 28px !important;}
+            .prefooter-subheader{padding: 0 10px !important; line-height: 28px !important;}
+            /*------- footer ------*/
+            .top-bottom-bg{width: 260px !important; height: auto !important;}
+			table {
+				  width: 100% !important;
+			}
+            .gallery-img a img {
+				height: 134px !important;
+			}
+			.gallery-img1 a img {
+				height: 60px !important;
+			}
+			.gallery-img2 a img {
+				height: 60px !important;
+			}
+	    }
+		@media only screen and (max-width:414px){
+			.container-middle {
+				width:315px !important;
+			}
+			td.scale-center-both img {
+				margin: 0 auto;
+			}
+<!-- agileits -->
+			.banner-bottom-left {
+				background: url(static/images/1.jpg) no-repeat 0px 0px !important;
+			}
+			.banner-bottom-left1 {
+				background: url(static/images/2.jpg) no-repeat 0px 0px !important;
+			}
+			td.body-head {
+				height: 20px;
+			}
+			.logo-right {
+				width: 135px !important;
+			}
+			.logo-left {
+				width: 100px !important;
+			}
+			.banner {
+				min-height: 350px !important;
+			}
+			.services-border {
+				width: 50% !important;
+			}
+			.banner-bottom-left, .banner-bottom-left2, .banner-bottom-left1 {
+				width: 370px !important;
+			}
+			.banner-bottom-left-sub {
+				width: 350px !important;
+			}
+			.team-bottom-left2-sub {
+				width: 330px !important;
+			}
+			img.discount-left1 {
+				width: 100% !important;
+			}
+			.social {
+				width: 35% !important;
+			}
+		}
+		@media only screen and (max-width: 384px){
+			.container {
+				width: 350px !important;
+			}
+			.banner-bottom-left, .banner-bottom-left2, .banner-bottom-left1 {
+				width: 350px !important;
+			}
+			.banner-bottom-left-sub {
+				width: 324px !important;
+			}
+		}
+		@media only screen and (max-width: 375px){
+
+		}
+		@media only screen and (max-width: 320px){
+			.team-bottom-left4, .team-bottom-left4 img {
+				width: 290px !important;
+				height: 300px;
+			}
+			table.scale.2-grids{
+				width:200px !important;
+			}
+			td.scale-center-both a img {
+				width: 100% !important;
+				height: auto !important;
+			}
+			.container-middle {
+				width:260px !important;
+			}
+			table.banner-bottom-left {
+				height: 280px;
+			}
+			.container {
+				width: 290px !important;
+			}
+			.team-bottom-left2-sub {
+				width: 267px !important;
+			}
+			.banner-bottom-left, .banner-bottom-left2, .banner-bottom-left1 {
+				width: 290px !important;
+			}
+			.banner-bottom-left-sub {
+				width: 266px !important;
+			}
+			.logo-left {
+				width: 100% !important;
+			}
+			.logo-right {
+				width: 80% !important;
+				text-align: left;
+			}
+			.best {
+				font-size: 2em !important;
+			}
+			.banner {
+				min-height: 270px !important;
+			}
+			.percentage {
+				font-size: 3em !important;
+			}
+			.percentage1 {
+				font-size: 2em !important;
+			}
+			.banner-bottom-left-sub-space {
+				height: 60px;
+			}
+		}
+    </style>
+</head>
+
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+	<table border="0" width="100%" cellpadding="0" cellspacing="0">
+	
+		<tr><td height="50" class="body-head"></td></tr>
+		
+        <tr>
+             <td width="100%" align="center" valign="top">
+                <!-- main content -->
+                <table width="800" border="0" cellpadding="0" cellspacing="0" align="center" class="container top-header-left">
+
+				
+				<!-- banner -->
+					
+					<tr>
+						<td>
+							<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
+							
+								<tr>
+									<td>
+										<table class="banner" width="100%" border="0" align="center" cellpadding="0" cellspacing="0" style="background:url(static/images/banner1.jpg) no-repeat 0px 0px;background-size:cover;min-height:500px">
+										
+											<tr>
+												<td>
+													<table class="container-middle banner1" width="400" border="0" cellpadding="0" cellspacing="0" align="center">
+											
+														<tr>
+															<td>
+																
+																<table border="0" width="100%" cellpadding="0" cellspacing="0" align="center" style="border:1px solid #999">
+																	
+																	<tr>
+																		<td>
+																			
+																			<table border="0" cellpadding="0" cellspacing="0" align="center" width="300">
+																				
+																				<tr><td height="30"></td></tr>
+																				
+																				<tr>
+                                                                                <div class="banner text-center">
+																					<td style="font-family: Arial,serif; font-size: 21px; color:#111111; line-height: 24px;text-align:center;"><p id="out">{{info}}</p></td>
+																				</div>
+                                                                                </tr>
+
+																				<tr><td height="20"></td></tr>
+																				
+																				<tr>
+																					<td align="center">	<input name="url" id="url" style="background:transparent;border:1px solid; height:30px;" size="40"  type="text" class="input" placeholder="原始网址"/></td>
+
+																				</tr>
+																				
+																				<tr><td height="30"></td></tr>
+																				
+																			</table>
+																			
+																		</td>
+																	</tr>
+																	
+																</table>
+																
+															</td>
+														</tr>
+													
+													</table>
+												</td>
+											</tr>
+											
+										</table>
+									</td>
+								</tr>
+							
+							</table>
+						</td>
+					</tr>
+					
+				<!-- //banner -->
+				
+
+				<!-- footer -->
+				
+					<tr>
+						<td>
+							
+							<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" bgcolor="#111111">
+
+
+								<tr>
+									<td align="center" bgcolor="#767677">
+
+										<table width="600" border="0" align="center" cellpadding="0" cellspacing="0" class="container-middle">
+
+											<tr><td height="10"></td></tr>
+
+											<tr>
+												<td>
+
+													<table class="copy-right" width="400" border="0" align="left" cellpadding="0" cellspacing="0">
+
+														<tr>
+															<td style="font-family: Arial,serif; font-size: 14px; color: #111111; line-height: 24px;" class="editable">
+																Copyrights © 2016 Skyduy. | Templates by <a href="http://w3layouts.com/" style="color:#000000;text-decoration:none;">W3layouts</a>
+
+
+
+															</td>
+														</tr>
+
+													</table>
+
+													<!-- SPACE -->
+													<table width="1" height="10" border="0" cellpadding="0" cellspacing="0" align="left">
+
+														<tr>
+															<td height="10" style="font-size: 0;line-height: 0;border-collapse: collapse;padding-left: 24px;">
+																&nbsp;
+															</td>
+														</tr>
+
+													</table>
+													<!-- END SPACE -->
+
+													<table class="twelve" width="100" border="0" align="right" cellpadding="0" cellspacing="0">
+
+														<tr>
+															<td style="font-family: Arial,serif; font-size: 14px; color:#111111; line-height: 24px;">
+
+                                                                <a href="https://github.com/skyduy/shopmanager" style="color:#000000;text-decoration:none;">
+
+																	SourceCode
+
+																</a>
+
+															</td>
+
+															<td style="font-family: Arial,serif; font-size: 14px; color:#111111; line-height: 24px;">
+
+																&nbsp;&nbsp;|&nbsp;&nbsp;
+
+															</td>
+
+															<td style="font-family: Arial,serif; font-size: 14px; color:#111111; line-height: 24px;">
+
+																<!-- Place URL to Web Version-->
+																<a href="http://skyduy.me" style="color:#000000;text-decoration:none;">
+
+																	Blog
+
+																</a>
+
+															</td>
+														</tr>
+
+													</table>
+
+												</td>
+											</tr>
+											
+											<tr>
+												<td height="10" style="font-size: 1px; line-height: 10px;">&nbsp;</td>
+											</tr>
+											
+										</tbody></table>
+
+									</td>
+								</tr>
+								
+							</table>
+							
+						</td>
+					</tr>
+					
+				<!-- footer -->
+				
+				</table>
+            </td>
+        </tr>
+		
+		<tr><td height="50"></td></tr>
+	</table>
+</body>
 </html>
-

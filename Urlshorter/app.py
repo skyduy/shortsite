@@ -7,6 +7,8 @@
     :author Skyduy <cuteuy@gmail.com> <http://skyduy.me>
 
 """
+# import sys
+# sys.path.insert(0, "/path/to/shortsite/")
 
 from flask import Flask
 
