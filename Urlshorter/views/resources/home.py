@@ -16,11 +16,11 @@ class Home(MethodView):
 
     def post(self):
         url = request.form['url']
-        url = url[:100]
+        url = url[:190]
         ok, suffix = create_suffix(url)
         if not ok:
             suffix = '非常抱歉... 系统繁忙/内部错误...'
-        return make_response(json.dumps({'ok': 0, 'suffix': suffix}))
+        return make_response(json.dumps({'ok': ok, 'suffix': suffix}))
 
 
 class Jump(MethodView):

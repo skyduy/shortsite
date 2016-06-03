@@ -10,7 +10,7 @@
 
 from flask import Flask
 
-from models import register_database
+from models import init_database
 
 
 def create_app(**config):
@@ -34,6 +34,12 @@ def register_config(app, config):
     """注册相关配置"""
     if config.get('debug') is True:
         app.debug = True
+
+
+def register_database(app):
+    db = init_database(app)
+    with app.app_context():
+        db.create_all()
 
 
 def register_routes(app):
